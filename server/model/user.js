@@ -1,5 +1,7 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 const { Schema } = mongoose;
+
 const userSchema = new Schema({
     name : {
         type: String,
@@ -25,8 +27,9 @@ const userSchema = new Schema({
 //     foreignField: '_id'
 // })
 
-userSchema.pre('save', function(next) {
-    
+userSchema.pre('save', async function(next) {
+    if(this.isModified('password'))
+        this.password = await bcrypt.hash(this.password,8)
     next();
 });
 

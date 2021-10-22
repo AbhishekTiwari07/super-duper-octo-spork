@@ -1,20 +1,24 @@
-const jwt = require('json-web-token')
+const jwt = require('jsonwebtoken')
 const User = require('../model/user')
 require('dotenv').config()
 
 const auth = async (req,res,next) =>{
+        
+    try{
         const token = req.headers.authorization.split(" ")[1]
         const decoded = jwt.verify(token,process.env.TOKEN_SECRET)
-    try{
-        const user = await User.findOne({ email : decoded})
+        
+        const user = await User.findOne({ 
+            email : decoded
+        })
         if(!user){
-            throw new Error("error")
+            throw new Error("Can't Login")
         }
         req.token = token
         req.user = user
     }
     catch(e){
-        return res.send({
+        return res.status(400).send({
             error : e.message,
             message : "Please Authenticate"})
     }
