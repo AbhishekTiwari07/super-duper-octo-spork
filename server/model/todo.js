@@ -9,6 +9,9 @@ const todoSchema = new Schema({
         type: String
     },
     due: {
+        type: Boolean
+    },
+    dueDate: {
         type: Date
     }
 })
