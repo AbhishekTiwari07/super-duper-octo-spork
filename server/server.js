@@ -3,7 +3,9 @@ const cors = require('cors');
 require('dotenv').config();
 require('./db/db')
 
-const user = require('./router/user')
+const user = require('./router/user');
+const todo = require('./router/todo')
+// const roadmap = require('./router');
 
 const app = express();
 
@@ -14,6 +16,7 @@ app.use(cors())
 const PORT = process.env.PORT || 3000;
 
 app.use('/user',user);
+app.use('/todo',todo);
 
 app.listen(PORT, (err)=>{
     if(err)

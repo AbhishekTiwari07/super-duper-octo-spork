@@ -1,6 +1,11 @@
-const {Schema} = require('mongoose');
+const mongoose = require('mongoose');
+const {Schema} = mongoose;
 
 const todoSchema = new Schema({
+    user: {
+        type: String,
+        required: true
+    },
     task: {
         type: String,
         required: true

@@ -14,9 +14,12 @@ router.get('/', auth, async (req, res)=>{
     }
 });
 
-router.post('/addTask', async, (req,res)=>{
+router.post('/addTask',auth, async (req,res)=>{
     try{
-        const todo = new Todo(req.body);
+        const todo = new Todo({
+            user: req.user.id,
+            ...req.body
+        });
 
         const result = await todo.save();
 
@@ -29,7 +32,7 @@ router.post('/addTask', async, (req,res)=>{
             message: e.message
         })
     }
-})
+});
 
 router.get('/:id', auth, async (req, res)=>{
     try{
