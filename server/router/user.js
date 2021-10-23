@@ -5,8 +5,29 @@ const auth = require('../middleware/auth')
 const bcrypt = require('bcrypt');
 require('dotenv').config()
 
-router.get('/', auth, async (req,res)=>{
-    res.send('This')
+router.get('/me', auth, async (req,res)=>{
+    try{
+        var {
+            name,
+            email,
+            articles,
+            posts
+        } = await User.findOne({
+            id: req.user.id
+        });
+
+        res.status(200).send({
+            name,
+            email,
+            articles,
+            posts
+        })
+    }
+    catch(e){
+        res.status(400).json({
+            message: e.message
+        })
+    }
 })
 
 router.post('/register', async (req,res)=>{

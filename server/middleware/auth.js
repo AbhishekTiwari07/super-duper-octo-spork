@@ -9,7 +9,7 @@ const auth = async (req,res,next) =>{
         const decoded = jwt.verify(token,process.env.TOKEN_SECRET)
         
         const user = await User.findOne({ 
-            email : decoded
+            email : decoded.email
         })
         if(!user){
             throw new Error("Can't Login")
