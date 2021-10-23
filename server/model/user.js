@@ -21,12 +21,6 @@ const userSchema = new Schema({
     timestamps: true
 });
 
-// userSchema.virtual('artowork',{
-//     ref:'Image',
-//     localField: 'artwork',
-//     foreignField: '_id'
-// })
-
 userSchema.pre('save', async function(next) {
     if(this.isModified('password'))
         this.password = await bcrypt.hash(this.password,8)
