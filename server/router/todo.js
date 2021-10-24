@@ -4,7 +4,9 @@ const auth = require('../middleware/auth')
 
 router.get('/', auth, async (req, res)=>{
     try{
-        const todo = await Todo.find();
+        const todo = await Todo.find({
+            user: req.user.id
+        });
         res.status(200).send(todo);
     }
     catch(e){

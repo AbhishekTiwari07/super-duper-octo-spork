@@ -36,7 +36,7 @@ router.post('/addNewStep/:id', auth, async (req,res)=>{
         });
         await step.save();
 
-        const rm = await Roadmap.findOne({id});
+        const rm = await Roadmap.findOne({_id : id});
 
         rm.steps.push(step);
         await rm.save();
@@ -55,7 +55,7 @@ router.post('/addNewStep/:id', auth, async (req,res)=>{
 router.get('/:id', async (req,res)=>{
     try{
         const rm = await Roadmap.findOne({
-            id: req.params.id
+            _id: req.params.id
         }).populate('steps')
 
         res.status(200).send(rm);
@@ -70,7 +70,7 @@ router.get('/:id', async (req,res)=>{
 router.put('/:id', async (req,res)=>{
     try{
         var rm = await Roadmap.findOneAndUpdate({
-            id: req.params.id
+            _id: req.params.id
         },{
             ...req.body
         });
@@ -87,7 +87,7 @@ router.put('/:id', async (req,res)=>{
 router.get('/step/:id', async (req,res)=>{
     try{
         const step = await Step.findOne({
-            id: req.params.id
+            _id: req.params.id
         })
 
         res.status(200).send(step);
@@ -101,15 +101,19 @@ router.get('/step/:id', async (req,res)=>{
 
 router.put('/step/:id', async (req,res)=>{
     try{
-        var step = await Step.findOneAndUpdate({
-            id: req.params.id
-        }, 
-        {
-            ...req.body
+        var step = await Step.findOne({
+            _id: req.params.id
         });
 
+        if(req.body.title)
+            step.title = req.body.title;
+        
+        if(req.body.description)
+            step.description = req.body.description;
 
-        res.status(200).send(step);
+        const s = await step.save()
+
+        res.status(200).send(s);
     }
     catch(e){
         res.status(400).json({

@@ -9,16 +9,14 @@ router.get('/me', auth, async (req,res)=>{
     try{
         var {
             name,
-            email,
             articles,
             posts
         } = await User.findOne({
-            id: req.user.id
+            _id: req.user.id
         });
 
         res.status(200).send({
             name,
-            email,
             articles,
             posts
         })
