@@ -5,7 +5,7 @@ require('./db/db')
 
 const user = require('./router/user');
 const todo = require('./router/todo')
-// const roadmap = require('./router');
+const roadmap = require('./router/roadmap');
 
 const app = express();
 
@@ -15,8 +15,9 @@ app.use(cors())
 
 const PORT = process.env.PORT || 3000;
 
-app.use('/user',user);
-app.use('/todo',todo);
+app.use('/user', user);
+app.use('/todo', todo);
+app.use('/roadmap', roadmap);
 
 app.listen(PORT, (err)=>{
     if(err)

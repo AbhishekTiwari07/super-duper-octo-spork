@@ -9,8 +9,8 @@ const stepSchema = new Schema({
     description: String,
     type: String,
     
-    steps: {
-        type: Schema.Type.ObjectId,
+    suite: {
+        type: Schema.Types.ObjectId,
         ref: "RMSuite"
     }
 },{
